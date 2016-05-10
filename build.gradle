@@ -1,0 +1,34 @@
+group 'com.ashish'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.5
+
+repositories {
+    mavenCentral()
+}
+
+dependencies{
+    testCompile 	"org.testng:testng:6.9.10"
+}
+
+def getFileByPattern(File dir, String pat, String stripDir) {
+    String path = ""
+    if (dir.isDirectory()) {
+        dir?.eachFileRecurse { file -> if (file.path ==~ pat) { path = file.getAbsolutePath().toString() } }
+        if (null != path && !path.isEmpty())
+            path = path?.substring(stripDir.length(), path?.length())
+    }
+    path
+}
+
+task runTest(type: Test) {
+    useTestNG() {
+        useDefaultListeners = true
+        def suiteFile = getFileByPattern(new File("$projectDir"), "DevelopmentSomething.xml", "$projectDir")
+        options.suites(suiteFile)
+
+        testLogging.showStandardStreams=true
+    }
+}
