@@ -10,7 +10,8 @@ repositories {
 }
 
 dependencies{
-    testCompile 	"org.testng:testng:6.9.10"
+    testCompile 	"org.testng:testng:6.9.10",
+                    "org.seleniumhq.selenium:selenium-java:2.30.0"
 }
 
 def getFileByPattern(File dir, String pat, String stripDir) {

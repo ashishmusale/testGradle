@@ -1,4 +1,4 @@
-package mypackage;
+package test;
 
 import org.testng.annotations.Test;
 import org.openqa.selenium.WebDriver;
