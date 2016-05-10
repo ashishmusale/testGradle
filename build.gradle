@@ -25,9 +25,12 @@ def getFileByPattern(File dir, String pat, String stripDir) {
 }
 
 task runTest(type: Test) {
+    println "Running tests now"
     useTestNG() {
         useDefaultListeners = true
         def suiteFile = getFileByPattern(new File("$projectDir"), "DevelopmentSomething.xml", "$projectDir")
+        println "suiteFile $suiteFile"
+        
         options.suites(suiteFile)
 
         testLogging.showStandardStreams=true
