@@ -1,5 +1,3 @@
-package test;
-
 import org.testng.annotations.Test;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterClass;

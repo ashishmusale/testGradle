@@ -2,37 +2,51 @@ group 'com.ashish'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
-
 sourceCompatibility = 1.5
 
 repositories {
     mavenCentral()
 }
+println("Running tests =========================    ")
 
-dependencies{
+
+repositories {
+    mavenCentral()
+}
+dependencies {
+    //to do: move these to the correct subprojects
     testCompile 	"org.testng:testng:6.9.10",
-                    "org.seleniumhq.selenium:selenium-java:2.30.0"
+            "org.seleniumhq.selenium:selenium-java:2.30.0"
 }
 
-def getFileByPattern(File dir, String pat, String stripDir) {
-    String path = ""
-    if (dir.isDirectory()) {
-        dir?.eachFileRecurse { file -> if (file.path ==~ pat) { path = file.getAbsolutePath().toString() } }
-        if (null != path && !path.isEmpty())
-            path = path?.substring(stripDir.length(), path?.length())
+
+
+sourceSets{
+    main {
+        java {
+            srcDir 'src/main/java'
+        }
     }
-    path
+    test {
+        java {
+            srcDir 'src/test/java'
+        }
+        resources {
+            srcDir 'src/main/webapp/WEB-INF'
+        }
+    }
 }
 
 task runTest(type: Test) {
     println "Running tests now"
     useTestNG() {
         useDefaultListeners = true
-        def suiteFile = getFileByPattern(new File("$projectDir"), "DevelopmentSomething.xml", "$projectDir")
+        def suiteFile = "src/test/java/DevelopmentSomething.xml"
         println "suiteFile $suiteFile"
-        
-        options.suites(suiteFile)
+        suites suiteFile
+//        options.suites(suiteFile)
 
         testLogging.showStandardStreams=true
     }
 }
+
